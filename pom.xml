@@ -22,10 +22,12 @@
 
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
+        <!--设置输出jar包位置-->
         <outputDirectory>${outPath}/classes</outputDirectory>
         <directory>${outPath}</directory>
         <finalName>${name}-${env}-${winn-pri}.${scmVersion}</finalName>
         <resources>
+            <!--设置打包路径-->
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
