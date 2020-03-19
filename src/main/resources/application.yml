@@ -1,2 +1,8 @@
 server:
   port: 8888
+spring:
+  thymeleaf:
+    mode: HTML
+#指定自定义的日志配置文件
+logging:
+  config: classpath:log4j2-pri.xml

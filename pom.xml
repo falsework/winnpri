@@ -20,6 +20,42 @@
         <java.version>1.8</java.version>
     </properties>
 
+
+
+    <!--在pom.xml中配置远程仓库。我们项目的pom文件会继承maven安装路径下的一个超级pom。而在超级pom中，-->
+    <!--配置了一个默认的远程仓库，就是中央仓库。可以找到超级pom：maven-model-builder-3.2.5.jar中-->
+    <!--org\apache\maven\model\pom-4.0.0.xml。其中关于默认远程仓库的配置内容如下：-->
+        <!--如图中分别配置了远程仓库的地址和插件仓库的地址。假如想要使用私服作为默认的下载构建的地址，-->
+    <!--可以在自己项目的pom文件中复制上述配置，直接将url的地址改成私服的地址即可。-->
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Central Repository</name>
+            <url>http://maven.beta.ulechina.tom.com/artifactory/repo</url>
+            <layout>default</layout>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>central</id>
+            <name>Central Repository</name>
+            <url>http://maven.beta.ulechina.tom.com/artifactory/repo</url>
+            <layout>default</layout>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </pluginRepository>
+    </pluginRepositories>
+
+
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
         <!--设置输出jar包位置-->
@@ -31,11 +67,11 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
-                <includes>
-                    <include>**/*.xml</include>
-                    <include>**/*.properties</include>
-                    <include>**/*.yml</include>
-                </includes>
+                <!--<includes>-->
+                    <!--<include>**/*.xml</include>-->
+                    <!--<include>**/*.properties</include>-->
+                    <!--<include>**/*.yml</include>-->
+                <!--</includes>-->
             </resource>
             <resource>
                 <directory>src/main/java</directory>
@@ -69,23 +105,75 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.2.RELEASE</version>
+        <version>2.2.5.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <dependencies>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-data-jdbc</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-data-jpa</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-jdbc</artifactId>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <!--排除掉springboot默认的日志配置-->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>1.5.2.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+        <!-- log4j异步需要依赖disruptor 框架 -->
+        <dependency>
+            <groupId>com.lmax</groupId>
+            <artifactId>disruptor</artifactId>
+            <version>3.4.2</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.mybatis.spring.boot</groupId>-->
+            <!--<artifactId>mybatis-spring-boot-starter</artifactId>-->
+            <!--<version>2.1.2</version>-->
+        <!--</dependency>-->
+
+        <!--热部署-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
 
