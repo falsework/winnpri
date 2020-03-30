@@ -3,12 +3,14 @@ package com.winn.aliyun.util;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
 /**
  * @author
  * @description 加载容器上下文
  * @date 2020/3/23
  */
+@Component
 public class AppContext implements ApplicationContextAware {
 
 	private static ApplicationContext applicationContext;
