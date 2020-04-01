@@ -9,9 +9,19 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+    <!--clean install -Denv=dev         此命令可以根据传值来修改<properties>标签中的属性的值-->
+    <!--用法： -DpropertyName=propertyValue-->
+    <!--作用：对插件的目标参数进行配置-->
+    <!--实例，例如大家经常使用的maven在执行本地安装命令install的时候跳过单元测试为 mvn install -Dmaven.test.skip=true。-->
+    <!--参数-D是Java自带的，其功能是设置Java的系统属性，Maven只是对这个参数进行了重用。那么就可以在准备插件的时候检查系统属性，进而对插件参数实现全局配置。-->
+    <!--mvn -DpropertyName=propertyValue clean package-->
+    <!--如果propertyName不存在pom.xml，它将被设置。-->
+    <!--如果propertyName已经存在pom.xml，其值将被作为参数传递的值覆盖-D。-->
+    <!--如果要发送多个变量，请使用多个空格分隔符加-D：-->
+    <!--mvn -DpropA=valueA -DpropB=valueB -DpropC=valueC clean package-->
     <properties>
         <name>winn-pri</name>
-        <!--<env>beta</env>-->
+        <env>dev</env>
         <winn-pri>1.0.0</winn-pri>
         <outPath>target</outPath>
         <scmVersion>HEAD</scmVersion>
@@ -61,7 +71,7 @@
         <!--设置输出jar包位置-->
         <outputDirectory>${outPath}/classes</outputDirectory>
         <directory>${outPath}</directory>
-        <finalName>${name}-${winn-pri}.${scmVersion}</finalName>
+        <finalName>${name}-${env}-${winn-pri}.${scmVersion}</finalName>
         <resources>
             <!--设置打包路径-->
             <resource>
@@ -82,7 +92,7 @@
                 </includes>
             </resource>
             <resource>
-                <directory>conf</directory>
+                <directory>conf/${env}</directory>
                 <!--<directory>conf/${env}</directory>-->
                 <filtering>true</filtering>
                 <includes>
