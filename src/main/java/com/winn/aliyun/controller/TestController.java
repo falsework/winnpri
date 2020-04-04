@@ -1,22 +1,31 @@
 package com.winn.aliyun.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.winn.aliyun.service.DemoService;
 import com.winn.aliyun.util.AppContext;
 import com.winn.aliyun.util.MsgCode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 @Controller
+@RequestMapping("/")
 @Scope("singleton") //只实例化一个bean对象（即每次请求都使用同一个bean对象），默认是singleton
 public class TestController {
+
     private static Logger log = LogManager.getLogger(TestController.class);
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @RequestMapping("/index")
     @ResponseBody
@@ -54,11 +63,15 @@ public class TestController {
      *
      */
     @RequestMapping("/testMethod1")
-    public void testMethod1() throws Exception {
+    @ResponseBody
+    public String testMethod1() throws Exception {
         DemoService obj = AppContext.getBean("demoService");
         log.info(obj);
         obj.testMethod();
-
+        Map<String, Object> map = jdbcTemplate.queryForMap("SELECT t.mobile from t_user_info t where t.id=1");
+        System.out.println(map);
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(map);
     }
 
 
