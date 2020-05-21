@@ -18,8 +18,8 @@ public class TimerDemoServiceImpl implements TimerDemoService {
 
 	 //项目启动一秒后，每隔5秒执行一次
 	@Override
-	@Scheduled(initialDelay = 1000, fixedDelay = 5000)
+	@Scheduled(initialDelay = 1000, fixedDelay = 60000)
 	public void timerDeom() throws Exception {
-//		log.info("执行了。。。。。");
+		log.info("我还没死，还在执行。。。。");
 	}
 }

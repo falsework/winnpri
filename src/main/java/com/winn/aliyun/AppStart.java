@@ -4,6 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
@@ -11,6 +13,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 //不配置包扫描范围是默认扫描范围是该启动类所在的包以及子包，
 //@ComponentScan("com.winn.aliyun")
+//加载指定文件，默认只能加载properties文件
+@PropertySource("classpath:jdbc.properties")
 public class AppStart {
 
     public static void main(String[] args) {

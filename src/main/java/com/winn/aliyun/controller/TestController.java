@@ -3,10 +3,13 @@ package com.winn.aliyun.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.winn.aliyun.service.DemoService;
 import com.winn.aliyun.util.AppContext;
+import com.winn.aliyun.util.Constants;
 import com.winn.aliyun.util.MsgCode;
+import com.winn.aliyun.util.config.DruidConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -27,10 +30,18 @@ public class TestController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Value("${TEST}")
+    private String test;
+
+    @Autowired
+    private DruidConfig druidConfig;
+
     @RequestMapping("/index")
     @ResponseBody
     public String index() throws Exception {
-        return "阿里云项目启动成功";
+        String test_confi = Constants.get("test_confi");
+        System.out.println(druidConfig);
+        return "阿里云项目启动成功,test=" + test;
     }
 
     @RequestMapping("/hello")
