@@ -23,6 +23,7 @@ public class GeneralInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         long start = System.currentTimeMillis();
         request.setAttribute("requestStartTime", start);
+        //执行方法前为当前线程添加标记
         ThreadContext.put(Constants.TRACE_ID, Tools.getRandomUUID12());
         return true;
     }
@@ -49,6 +50,7 @@ public class GeneralInterceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        //请求完成删除当前线程的标记
         ThreadContext.clearMap();
     }
 }
