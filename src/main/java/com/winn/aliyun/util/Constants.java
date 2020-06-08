@@ -14,6 +14,8 @@ public class Constants extends Properties {
 
     public static Constants p = null;
 
+    public final static String TRACE_ID = "TRACE_ID";
+
     static {
         init(null);
     }
